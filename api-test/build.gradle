@@ -11,11 +11,18 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.1'
     implementation group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
 
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    implementation group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+    implementation group: 'org.aeonbits.owner', name: 'owner', version: '1.0.12'
+
     testImplementation group: 'org.testng', name: 'testng', version: '7.1.0'
 }
 
 test{
     useTestNG()
+
+    systemProperties System.getProperties()
 
     testLogging {
         events "PASSED", "FAILED", "SKIPPED"
