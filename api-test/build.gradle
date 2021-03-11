@@ -9,6 +9,19 @@ repositories {
 dependencies {
     implementation group: 'io.rest-assured', name: 'rest-assured', version: '4.3.3'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.1'
+    implementation group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
 
     testImplementation group: 'org.testng', name: 'testng', version: '7.1.0'
+}
+
+test{
+    useTestNG()
+
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+
+    test.outputs.upToDateWhen { false }
 }

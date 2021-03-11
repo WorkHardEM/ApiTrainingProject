@@ -1,11 +1,13 @@
 package com.socks.tests;
 
+import com.github.javafaker.Faker;
 import com.socks.api.payloads.UserPayload;
 import com.socks.api.services.UserApiService;
 import io.restassured.RestAssured;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.Locale;
 
 import static com.socks.api.conditions.Conditions.bodyField;
 import static com.socks.api.conditions.Conditions.statusCode;
@@ -15,6 +17,7 @@ import static org.hamcrest.Matchers.not;
 public class UsersTest {
 
     private final UserApiService userApiService = new UserApiService();
+    private final Faker faker = new Faker(new Locale("en"));
 
     @BeforeMethod
     public void setUp() {
@@ -25,20 +28,21 @@ public class UsersTest {
     public void testCanRegisterNewUser() {
         // given
         UserPayload user = new UserPayload()
-                .username(RandomStringUtils.randomAlphanumeric(6))
+                .username(faker.name().username())
                 .email("test@mail.com")
                 .password("test123");
 
         // expect
-        userApiService.registerUser(user)
+       userApiService.registerUser(user)
                 .shouldHave(statusCode(200))
                 .shouldHave(bodyField("id", not(blankOrNullString())));
+
     }
 
     @Test
     public void testCanNotRegisterSameUserTwice() {
         UserPayload user = new UserPayload()
-                .username(RandomStringUtils.randomAlphanumeric(6))
+                .username(faker.name().username())
                 .email("test@mail.com")
                 .password("test123");
 
